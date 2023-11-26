@@ -103,16 +103,23 @@ namespace Adressverwaltungsprogramm
 
         private void listBoxOutput()
         {
-            FileData.Items.Clear();
-
-            var fileLines   = File.ReadAllLines(filePath);
-
-            foreach (var line in fileLines)
+            
+            if(!File.Exists(filePath))
             {
-                var output  = line.Replace(",", " ");
-                FileData.Items.Add($"{output}");
+
+            }
+            else
+            {
+                FileData.Items.Clear();
+
+                var fileLines   = File.ReadAllLines(filePath);
+
+                foreach (var line in fileLines)
+                {
+                    var output  = line.Replace(",", " ");
+                    FileData.Items.Add($"{output}");
+                }
             }
         }
-
     }
 }
