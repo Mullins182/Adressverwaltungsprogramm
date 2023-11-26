@@ -37,7 +37,7 @@ namespace Adressverwaltungsprogramm
 
             if(Vorname.Text == "" || Nachname.Text == "" || Straße.Text == "" || Ort.Text == "")
             {
-                MessageBox.Show("Gib bitte einen Vor und Nachnamen, Straße & Ort ein, um einen neuen Datensatz anlegen zu können !", "Kann Datei nicht schreiben !!!", MessageBoxButton.OK);
+                MessageBox.Show("Gib bitte einen Vor und Nachnamen, Straße & Ort ein um einen neuen Datensatz anlegen zu können !", "Fehlerhafte Daten !!!", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
@@ -72,26 +72,28 @@ namespace Adressverwaltungsprogramm
         {
             List<string> readFile = new List<string>();
 
-            if(!File.Exists(filePath))
+            if (!File.Exists(filePath))
             {
-                throw new Exception("KEINE DATEN ZUM LÖSCHEN VORHANDEN");
+                MessageBox.Show("KEINE DATEN ZUM LÖSCHEN VORHANDEN !!!", "FEHLER", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-
-            var readArray = File.ReadAllLines(filePath);
-
-            foreach (var item in readArray)
+            else
             {
-            readFile.Add(item);                
-            }
-            
-            if (FileData.SelectedItem != null)
-            {
-                if (MessageBox.Show("Willst Du den Datei-Eintrag wirklich löschen ???", "Bitte bestätige", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                var readArray = File.ReadAllLines(filePath);
+
+                foreach (var item in readArray)
                 {
-                    int del = FileData.SelectedIndex;
-                    FileData.Items.RemoveAt(del);
-                    readFile.RemoveAt(del);
-                    File.WriteAllLines(filePath, readFile);
+                    readFile.Add(item);
+                }
+
+                if (FileData.SelectedItem != null)
+                {
+                    if (MessageBox.Show("Willst Du den Datei-Eintrag wirklich löschen ???", "Bitte bestätige", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        int del = FileData.SelectedIndex;
+                        FileData.Items.RemoveAt(del);
+                        readFile.RemoveAt(del);
+                        File.WriteAllLines(filePath, readFile);
+                    }
                 }
             }
         }
