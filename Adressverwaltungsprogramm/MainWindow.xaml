@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Adressverwaltungsprogramm"
         mc:Ignorable="d"
-        Title="Ben's Adressverwaltungs-Programm" Height="800" Width="700" Background="#FF4C0000" BorderThickness="1.5" BorderBrush="Goldenrod">
+        Title="Ben's Adressverwaltungs-Programm" Height="800" Width="1000" Background="#FF4C0000" BorderThickness="1.5" BorderBrush="Goldenrod">
     <Grid RenderTransformOrigin="0.5,0.5">
         <Grid.Background>
             <RadialGradientBrush SpreadMethod="Reflect" MappingMode="RelativeToBoundingBox">
@@ -30,7 +30,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" Height="500">
+        <StackPanel Grid.Column="0" Height="600">
 
             <Label x:Name="VornameLabel"    Content="VORNAME" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="ExtraLight"/>
             <TextBox x:Name="Vorname"       Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
@@ -48,11 +48,13 @@
             <TextBox x:Name="Handynummer"   Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
             <Label x:Name="EmailLabel"      Content="EMAILADRESSE" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
             <TextBox x:Name="Emailadresse"  Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
+            <Button x:Name="saveData"       Content="Kontaktdaten speichern" Margin="20" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="28" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="saveData_Click"/>
 
         </StackPanel>
 
         <StackPanel Grid.Column="1" Height="300">
-            <Button x:Name="saveData" Content="Kontaktdaten speichern" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="25" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="saveData_Click"/>
+            <ListBox x:Name="FileData" Background="Black" Foreground="#FFFFA400" BorderBrush="#FF9A0303" BorderThickness="2"/>
+            <Button  x:Name="DeleteFileLine" Content="Datensatz löschen !" Margin="20" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="30" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="DeleteFileLine_Click"/>
         </StackPanel>
     </Grid>
 </Window>
