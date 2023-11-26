@@ -29,7 +29,7 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
+        <Label x:Name="ShowVersion" Content="" Height="20" Width="100" Grid.ColumnSpan="2" Margin="455,30,0,0" HorizontalAlignment="center" VerticalAlignment="top" HorizontalContentAlignment="Left" FontFamily="Arial" FontSize="10" Foreground="Goldenrod" FontWeight="Bold" FontStyle="Italic"/>
         <Label Content="ADRESSVERWALTUNG" HorizontalContentAlignment="center" Grid.ColumnSpan="50" FontFamily="chiller" FontSize="50" FontWeight="Bold" Foreground="Goldenrod"/>
 
         <StackPanel Grid.Column="0" Height="600">

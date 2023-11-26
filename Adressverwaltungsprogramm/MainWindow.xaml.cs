@@ -25,6 +25,8 @@ namespace Adressverwaltungsprogramm
         {
             InitializeComponent();
 
+            ShowVersion.Content = "Version 1.0.0";
+
             listBoxOutput();
         }
 
