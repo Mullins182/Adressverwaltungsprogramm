@@ -6,16 +6,30 @@
         xmlns:local="clr-namespace:Adressverwaltungsprogramm"
         mc:Ignorable="d"
         Title="Ben's Adressverwaltungs-Programm" Height="800" Width="700" Background="#FF4C0000" BorderThickness="1.5" BorderBrush="Goldenrod">
-    <Grid>
+    <Grid RenderTransformOrigin="0.5,0.5">
+        <Grid.Background>
+            <RadialGradientBrush SpreadMethod="Reflect" MappingMode="RelativeToBoundingBox">
+                <RadialGradientBrush.RelativeTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterY="0" CenterX="0"/>
+                        <SkewTransform CenterY="0" CenterX="0"/>
+                        <RotateTransform CenterY="0" CenterX="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </RadialGradientBrush.RelativeTransform>
+                <GradientStop Color="Black" Offset="1"/>
+                <GradientStop Color="#FFB10505" Offset="0.073"/>
+            </RadialGradientBrush>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="420"/>            
+            <ColumnDefinition Width="420"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-          
+
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
+
         <StackPanel Grid.Column="0" Height="500">
 
             <Label x:Name="VornameLabel"    Content="VORNAME" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="ExtraLight"/>
