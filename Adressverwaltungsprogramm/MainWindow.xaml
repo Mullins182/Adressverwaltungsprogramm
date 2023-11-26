@@ -5,8 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Adressverwaltungsprogramm"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Ben's Adressverwaltungs App" Height="800" Width="1000" Background="#FF4C0000" BorderThickness="1.5" BorderBrush="Goldenrod">
+    <Grid RenderTransformOrigin="0.5,0.5">
+        <Grid.Background>
+            <RadialGradientBrush SpreadMethod="Reflect" MappingMode="RelativeToBoundingBox">
+                <RadialGradientBrush.RelativeTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterY="0" CenterX="0"/>
+                        <SkewTransform CenterY="0" CenterX="0"/>
+                        <RotateTransform CenterY="0" CenterX="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </RadialGradientBrush.RelativeTransform>
+                <GradientStop Color="Black" Offset="1"/>
+                <GradientStop Color="#FFB10505" Offset="0.073"/>
+            </RadialGradientBrush>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="420"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label x:Name="ShowVersion" Content="" Height="20" Width="100" Grid.ColumnSpan="2" Margin="455,30,0,0" HorizontalAlignment="center" VerticalAlignment="top" HorizontalContentAlignment="Left" FontFamily="Arial" FontSize="10" Foreground="Goldenrod" FontWeight="Bold" FontStyle="Italic"/>
+        <Label Content="ADRESSVERWALTUNG" HorizontalContentAlignment="center" Grid.ColumnSpan="50" FontFamily="chiller" FontSize="50" FontWeight="Bold" Foreground="Goldenrod"/>
+
+        <StackPanel Grid.Column="0" Height="600">
+            <Label Content="Neuen Kontakt anlegen" HorizontalContentAlignment="center" FontFamily="Arial" FontSize="18" Foreground="OrangeRed"/>
+            <Label x:Name="VornameLabel"    Content="VORNAME" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="ExtraLight"/>
+            <TextBox x:Name="Vorname"       Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
+            <Label x:Name="NachnameLabel"   Content="NACHNAME" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
+            <TextBox x:Name="Nachname"      Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
+            <Label x:Name="StrasseLabel"    Content="STRAßE" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
+            <TextBox x:Name="Straße"        Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
+            <Label x:Name="PLZLabel"        Content="POSTLEITZAHL" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
+            <TextBox x:Name="PLZ"           Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
+            <Label x:Name="OrtLabel"        Content="ORT" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
+            <TextBox x:Name="Ort"           Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
+            <Label x:Name="TelefonLabel"    Content="TELEFONNUMMER" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
+            <TextBox x:Name="Telefonnummer" Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
+            <Label x:Name="HandyLabel"      Content="MOBILNUMMER" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
+            <TextBox x:Name="Handynummer"   Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
+            <Label x:Name="EmailLabel"      Content="EMAILADRESSE" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
+            <TextBox x:Name="Emailadresse"  Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
+            <Button x:Name="saveData"       Content="Kontaktdaten speichern" Margin="20" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="28" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="saveData_Click"/>
+
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Height="600">
+            <Label Content="Gespeicherte Kontaktdaten" Margin="3" HorizontalContentAlignment="center" FontFamily="Arial" FontSize="18" Foreground="OrangeRed"/>
+            <ListBox x:Name="FileData" Height="480" Background="Black" Foreground="#FFFFA400" BorderBrush="#FF9A0303" BorderThickness="2"/>
+            <Button  x:Name="DeleteFileLine" Content="Datensatz löschen !" Margin="15" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="30" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="DeleteFileLine_Click"/>
+        </StackPanel>
     </Grid>
 </Window>
