@@ -33,29 +33,36 @@ namespace Adressverwaltungsprogramm
             FormData contactData        = new FormData();
             List<FormData> writeData    = new List<FormData>();
 
-            contactData.Vorname         = Vorname.Text;
-            contactData.Nachname        = Nachname.Text;
-            contactData.Strasse         = Straße.Text;
-            contactData.Postleitzahl    = PLZ.Text;
-            contactData.Ort             = Ort.Text;
-            contactData.Telefonnummer   = Telefonnummer.Text;
-            contactData.Mobilnummer     = Handynummer.Text;
-            contactData.Email           = Emailadresse.Text;
+            if(Vorname.Text == "" || Nachname.Text == "" || Straße.Text == "" || Ort.Text == "")
+            {
+                MessageBox.Show("Gib bitte einen Vor und Nachnamen, Straße & Ort ein, um einen neuen Datensatz anlegen zu können !", "Kann Datei nicht schreiben !!!", MessageBoxButton.OK);
+            }
+            else
+            {
+                contactData.Vorname         = Vorname.Text;
+                contactData.Nachname        = Nachname.Text;
+                contactData.Strasse         = Straße.Text;
+                contactData.Postleitzahl    = PLZ.Text;
+                contactData.Ort             = Ort.Text;
+                contactData.Telefonnummer   = Telefonnummer.Text;
+                contactData.Mobilnummer     = Handynummer.Text;
+                contactData.Email           = Emailadresse.Text;
 
-            writeData.Add(contactData);
+                writeData.Add(contactData);
 
-            Vorname.Text                = "";
-            Nachname.Text               = "";
-            Straße.Text                 = "";
-            PLZ.Text                    = "";
-            Ort.Text                    = "";
-            Telefonnummer.Text          = "";
-            Handynummer.Text            = "";
-            Emailadresse.Text           = "";
+                Vorname.Text                = "";
+                Nachname.Text               = "";
+                Straße.Text                 = "";
+                PLZ.Text                    = "";
+                Ort.Text                    = "";
+                Telefonnummer.Text          = "";
+                Handynummer.Text            = "";
+                Emailadresse.Text           = "";
 
-            Controller.FileAccess.WriteData(writeData, filePath);
+                Controller.FileAccess.WriteData(writeData, filePath);
 
-            listBoxOutput();
+                listBoxOutput();
+            }
         }
 
         // Löschen einer Zeile aus der ListBox, welche ausgewählt wurde !!!
@@ -77,7 +84,7 @@ namespace Adressverwaltungsprogramm
             
             if (FileData.SelectedItem != null)
             {
-                if (MessageBox.Show("Wollen Sie den Eintrag wirklich löschen ???", "BESTÄTIGEN", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Willst Du den Datei-Eintrag wirklich löschen ???", "Bitte bestätige", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     int del = FileData.SelectedIndex;
                     FileData.Items.RemoveAt(del);
