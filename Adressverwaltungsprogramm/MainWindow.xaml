@@ -33,7 +33,7 @@
         <Label Content="ADRESSVERWALTUNG" HorizontalContentAlignment="center" Grid.ColumnSpan="2" FontFamily="chiller" FontSize="50" FontWeight="Bold" Foreground="Goldenrod" Panel.ZIndex="0"/>
         <Label x:Name="WriteInfoLabel" Content="KONTAKTDATEN IN DATEI GESCHRIEBEN" HorizontalContentAlignment="center" Grid.Column="0" Panel.ZIndex="1" Grid.ColumnSpan="2" Margin="0,300,0,0" FontFamily="chiller" FontSize="50" FontWeight="Bold" Foreground="GreenYellow" Visibility="Collapsed"/>
 
-        <StackPanel Grid.Column="0" Height="600">
+        <StackPanel Grid.Column="0" Height="650" Margin="0,45,0,0">
             <Label x:Name="FormLabel"       Content="Neuen Kontakt anlegen" HorizontalContentAlignment="center" FontFamily="Arial" FontSize="18" Foreground="OrangeRed"/>
             <Label x:Name="VornameLabel"    Content="VORNAME" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="ExtraLight"/>
             <TextBox x:Name="Vorname"       Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
@@ -51,7 +51,8 @@
             <TextBox x:Name="Handynummer"   Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
             <Label x:Name="EmailLabel"      Content="EMAIL-ADRESSE" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
             <TextBox x:Name="Emailadresse"  Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
-            <Button x:Name="saveData"       Content="Kontaktdaten speichern" Margin="20" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="28" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="saveData_Click"/>
+            <Button x:Name="ClearMask"       Content="Formular leeren" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="35" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="ClearMask_Click"/>
+            <Button x:Name="saveData"       Content="Kontaktdaten speichern" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="28" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="saveData_Click"/>
 
         </StackPanel>
 

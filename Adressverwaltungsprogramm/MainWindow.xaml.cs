@@ -33,6 +33,20 @@ namespace Adressverwaltungsprogramm
 
             listBoxOutput();
         }
+        private void ClearMask_Click(object sender, RoutedEventArgs e)
+        {
+            editContactData = false;
+            FormLabel.Content = "Neuen Kontakt anlegen";
+
+            Vorname.Text = "";
+            Nachname.Text = "";
+            Straße.Text = "";
+            PLZ.Text = "";
+            Ort.Text = "";
+            Telefonnummer.Text = "";
+            Handynummer.Text = "";
+            Emailadresse.Text = "";
+        }
 
         private async void saveData_Click(object sender, RoutedEventArgs e)
         {
@@ -121,8 +135,8 @@ namespace Adressverwaltungsprogramm
             }
         }
 
-        // Löschen einer Zeile aus der ListBox, welche ausgewählt wurde !!!
-        private void DeleteFileLine_Click(object sender, RoutedEventArgs e)
+        // Löschen eines Eintrags aus der Listbox und eines Datensatzes aus der Kontaktdatendatei !!!
+        private async void DeleteFileLine_Click(object sender, RoutedEventArgs e)
         {
             List<string> readFile = new List<string>();
 
@@ -130,9 +144,14 @@ namespace Adressverwaltungsprogramm
             {
                 MessageBox.Show("KEINE DATEN ZUM LÖSCHEN VORHANDEN !!!", "FEHLER", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+            else if (FileData.SelectedItem == null)
+            {
+
+            }
             else
             {
                 var readArray = File.ReadAllLines(filePath);
+                WriteInfoLabel.Content = "DATENSATZ ERFOLGREICH GELÖSCHT";
 
                 foreach (var item in readArray)
                 {
@@ -143,10 +162,36 @@ namespace Adressverwaltungsprogramm
                 {
                     if (MessageBox.Show($"Willst Du den Eintrag: {FileData.SelectedItem} wirklich löschen ???", "Bitte bestätige", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        int del = FileData.SelectedIndex;
-                        FileData.Items.RemoveAt(del);
-                        readFile.RemoveAt(del);
+                        Vorname.Text        = "";
+                        Nachname.Text       = "";
+                        Straße.Text         = "";
+                        PLZ.Text            = "";
+                        Ort.Text            = "";
+                        Telefonnummer.Text  = "";
+                        Handynummer.Text    = "";
+                        Emailadresse.Text   = "";
+
+                        editContactData = false;
+                        FormLabel.Content = "Neuen Kontakt anlegen";
+
+                        int i = FileData.SelectedIndex;
+
+                        FileData.Items.RemoveAt(i);
+                        readFile.RemoveAt(i * 8);
+                        readFile.RemoveAt(i * 8);
+                        readFile.RemoveAt(i * 8);
+                        readFile.RemoveAt(i * 8);
+                        readFile.RemoveAt(i * 8);
+                        readFile.RemoveAt(i * 8);
+                        readFile.RemoveAt(i * 8);
+                        readFile.RemoveAt(i * 8);
+
                         File.WriteAllLines(filePath, readFile);
+
+                        WriteInfoLabel.Visibility = Visibility.Visible;
+                        await Task.Delay(3000);
+                        WriteInfoLabel.Visibility = Visibility.Collapsed;
+                        WriteInfoLabel.Content = "KONTAKTDATEN IN DATEI GESCHRIEBEN";
                     }
                 }
             }
@@ -207,5 +252,6 @@ namespace Adressverwaltungsprogramm
                 editContactData = true;
             }
         }
+
     }
 }
