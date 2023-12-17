@@ -3,6 +3,7 @@ using Adressverwaltungsprogramm.Models;
 using System.IO;
 using System.Text;
 using System.Windows;
+using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -18,19 +19,36 @@ namespace Adressverwaltungsprogramm
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+        
     public partial class MainWindow : Window
     {
         string filePath = "Kontaktdaten.dat";
+        bool editContactData = false;
         public MainWindow()
         {
             InitializeComponent();
 
-            ShowVersion.Content = "Version 1.0.0";
+            ShowVersion.Content = "Version 1.0.3";
 
             listBoxOutput();
         }
+        private void ClearMask_Click(object sender, RoutedEventArgs e)
+        {
+            editContactData = false;
+            FormLabel.Content = "Neuen Kontakt anlegen";
 
-        private void saveData_Click(object sender, RoutedEventArgs e)
+            Vorname.Text = "";
+            Nachname.Text = "";
+            Straße.Text = "";
+            PLZ.Text = "";
+            Ort.Text = "";
+            Telefonnummer.Text = "";
+            Handynummer.Text = "";
+            Emailadresse.Text = "";
+        }
+
+        private async void saveData_Click(object sender, RoutedEventArgs e)
         {
             FormData contactData        = new FormData();
             List<FormData> writeData    = new List<FormData>();
@@ -41,34 +59,84 @@ namespace Adressverwaltungsprogramm
             }
             else
             {
-                contactData.Vorname         = Vorname.Text;
-                contactData.Nachname        = Nachname.Text;
-                contactData.Strasse         = Straße.Text;
-                contactData.Postleitzahl    = PLZ.Text;
-                contactData.Ort             = Ort.Text;
-                contactData.Telefonnummer   = Telefonnummer.Text;
-                contactData.Mobilnummer     = Handynummer.Text;
-                contactData.Email           = Emailadresse.Text;
+                if (editContactData)
+                {
+                    List<string>? ContactData = new List<string>();
 
-                writeData.Add(contactData);
+                    ContactData = editFileEntrys.ReadDataForWrite();
 
-                Vorname.Text                = "";
-                Nachname.Text               = "";
-                Straße.Text                 = "";
-                PLZ.Text                    = "";
-                Ort.Text                    = "";
-                Telefonnummer.Text          = "";
-                Handynummer.Text            = "";
-                Emailadresse.Text           = "";
+                    ContactData[FileData.SelectedIndex * 8]     = Vorname.Text + "*" + Nachname.Text;
+                    ContactData[FileData.SelectedIndex * 8 + 1] = Straße.Text;
+                    ContactData[FileData.SelectedIndex * 8 + 2] = PLZ.Text;
+                    ContactData[FileData.SelectedIndex * 8 + 3] = Ort.Text;
+                    ContactData[FileData.SelectedIndex * 8 + 4] = Telefonnummer.Text;
+                    ContactData[FileData.SelectedIndex * 8 + 5] = Handynummer.Text;
+                    ContactData[FileData.SelectedIndex * 8 + 6] = Emailadresse.Text;
+                    //ContactData[FileData.SelectedIndex * 9 + 7] = "------------------------------------------------";
 
-                Controller.FileAccess.WriteData(writeData, filePath);
+                    Vorname.Text        = "";
+                    Nachname.Text       = "";
+                    Straße.Text         = "";
+                    PLZ.Text            = "";
+                    Ort.Text            = "";
+                    Telefonnummer.Text  = "";
+                    Handynummer.Text    = "";
+                    Emailadresse.Text   = "";
 
-                listBoxOutput();
+                    Controller.FileAccess.OverwriteData(ContactData, filePath);
+
+                    editContactData = false;
+
+                    listBoxOutput();
+
+                    WriteInfoLabel.Content = "KONTAKTDATEN AKTUALISIERT";
+                    WriteInfoLabel.Visibility = Visibility.Visible;
+
+                    await Task.Delay(3000);
+
+                    WriteInfoLabel.Visibility = Visibility.Collapsed;
+                    FormLabel.Content = "Neuen Kontakt anlegen";
+                    WriteInfoLabel.Content = "KONTAKTDATEN IN DATEI GESCHRIEBEN";
+                }
+                else
+                {
+                    writeData.Clear();
+
+                    contactData.Vorname         = Vorname.Text;
+                    contactData.Nachname        = Nachname.Text;
+                    contactData.Strasse         = Straße.Text;
+                    contactData.Postleitzahl    = PLZ.Text;
+                    contactData.Ort             = Ort.Text;
+                    contactData.Telefonnummer   = Telefonnummer.Text;
+                    contactData.Mobilnummer     = Handynummer.Text;
+                    contactData.Email           = Emailadresse.Text;
+
+                    writeData.Add(contactData);
+
+                    Vorname.Text                = "";
+                    Nachname.Text               = "";
+                    Straße.Text                 = "";
+                    PLZ.Text                    = "";
+                    Ort.Text                    = "";
+                    Telefonnummer.Text          = "";
+                    Handynummer.Text            = "";
+                    Emailadresse.Text           = "";
+
+                    Controller.FileAccess.WriteData(writeData, filePath);
+
+                    WriteInfoLabel.Visibility = Visibility.Visible;
+
+                    await Task.Delay(3000);
+
+                    WriteInfoLabel.Visibility = Visibility.Collapsed;
+
+                    listBoxOutput();
+                }
             }
         }
 
-        // Löschen einer Zeile aus der ListBox, welche ausgewählt wurde !!!
-        private void DeleteFileLine_Click(object sender, RoutedEventArgs e)
+        // Löschen eines Eintrags aus der Listbox und eines Datensatzes aus der Kontaktdatendatei !!!
+        private async void DeleteFileLine_Click(object sender, RoutedEventArgs e)
         {
             List<string> readFile = new List<string>();
 
@@ -76,9 +144,14 @@ namespace Adressverwaltungsprogramm
             {
                 MessageBox.Show("KEINE DATEN ZUM LÖSCHEN VORHANDEN !!!", "FEHLER", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+            else if (FileData.SelectedItem == null)
+            {
+
+            }
             else
             {
                 var readArray = File.ReadAllLines(filePath);
+                WriteInfoLabel.Content = "DATENSATZ ERFOLGREICH GELÖSCHT";
 
                 foreach (var item in readArray)
                 {
@@ -87,26 +160,49 @@ namespace Adressverwaltungsprogramm
 
                 if (FileData.SelectedItem != null)
                 {
-                    if (MessageBox.Show("Willst Du den Datei-Eintrag wirklich löschen ???", "Bitte bestätige", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (MessageBox.Show($"Willst Du den Eintrag: {FileData.SelectedItem} wirklich löschen ???", "Bitte bestätige", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        int del = FileData.SelectedIndex;
-                        FileData.Items.RemoveAt(del);
-                        readFile.RemoveAt(del);
+                        Vorname.Text        = "";
+                        Nachname.Text       = "";
+                        Straße.Text         = "";
+                        PLZ.Text            = "";
+                        Ort.Text            = "";
+                        Telefonnummer.Text  = "";
+                        Handynummer.Text    = "";
+                        Emailadresse.Text   = "";
+
+                        editContactData = false;
+                        FormLabel.Content = "Neuen Kontakt anlegen";
+
+                        int i = FileData.SelectedIndex;
+
+                        FileData.Items.RemoveAt(i);
+                        readFile.RemoveAt(i * 8);
+                        readFile.RemoveAt(i * 8);
+                        readFile.RemoveAt(i * 8);
+                        readFile.RemoveAt(i * 8);
+                        readFile.RemoveAt(i * 8);
+                        readFile.RemoveAt(i * 8);
+                        readFile.RemoveAt(i * 8);
+                        readFile.RemoveAt(i * 8);
+
                         File.WriteAllLines(filePath, readFile);
+
+                        WriteInfoLabel.Visibility = Visibility.Visible;
+                        await Task.Delay(3000);
+                        WriteInfoLabel.Visibility = Visibility.Collapsed;
+                        WriteInfoLabel.Content = "KONTAKTDATEN IN DATEI GESCHRIEBEN";
                     }
                 }
             }
         }
 
-        private void saveData_MouseEnter(object sender, MouseEventArgs e)
-        {
-
-        }
-
         private void listBoxOutput()
         {
-            
-            if(!File.Exists(filePath))
+            List<string> Entrys = new List<string>();
+            Entrys = Controller.FileAccess.ReadData();
+
+            if (!File.Exists(filePath))
             {
 
             }
@@ -114,14 +210,48 @@ namespace Adressverwaltungsprogramm
             {
                 FileData.Items.Clear();
 
-                var fileLines   = File.ReadAllLines(filePath);
-
-                foreach (var line in fileLines)
+                foreach (var item in Entrys)
                 {
-                    var output  = line.Replace(",", " ");
-                    FileData.Items.Add($"{output}");
+                    FileData.Items.Add($"{item}");
                 }
             }
         }
+
+        private void Quit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void FileData_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (!File.Exists(filePath))
+            {
+                MessageBox.Show("KEINE DATEN ZUM EDITIEREN VORHANDEN !!!", "FEHLER", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (FileData.SelectedItem == null)
+            {
+
+            }
+            else
+            {
+                FormLabel.Content = "Kontakt bearbeiten";
+
+                List<string>? ContactData = new List<string>();
+
+                ContactData = editFileEntrys.ReadData();
+
+                Vorname.Text        = ContactData[FileData.SelectedIndex * 9];
+                Nachname.Text       = ContactData[FileData.SelectedIndex * 9 + 1];
+                Straße.Text         = ContactData[FileData.SelectedIndex * 9 + 2];
+                PLZ.Text            = ContactData[FileData.SelectedIndex * 9 + 3];
+                Ort.Text            = ContactData[FileData.SelectedIndex * 9 + 4];
+                Telefonnummer.Text  = ContactData[FileData.SelectedIndex * 9 + 5];
+                Handynummer.Text    = ContactData[FileData.SelectedIndex * 9 + 6];
+                Emailadresse.Text   = ContactData[FileData.SelectedIndex * 9 + 7];
+
+                editContactData = true;
+            }
+        }
+
     }
 }

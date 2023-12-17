@@ -30,15 +30,16 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Label x:Name="ShowVersion" Content="" Height="20" Width="100" Grid.ColumnSpan="2" Margin="455,30,0,0" HorizontalAlignment="center" VerticalAlignment="top" HorizontalContentAlignment="Left" FontFamily="Arial" FontSize="10" Foreground="Goldenrod" FontWeight="Bold" FontStyle="Italic"/>
-        <Label Content="ADRESSVERWALTUNG" HorizontalContentAlignment="center" Grid.ColumnSpan="50" FontFamily="chiller" FontSize="50" FontWeight="Bold" Foreground="Goldenrod"/>
+        <Label Content="ADRESSVERWALTUNG" HorizontalContentAlignment="center" Grid.ColumnSpan="2" FontFamily="chiller" FontSize="50" FontWeight="Bold" Foreground="Goldenrod" Panel.ZIndex="0"/>
+        <Label x:Name="WriteInfoLabel" Content="KONTAKTDATEN IN DATEI GESCHRIEBEN" HorizontalContentAlignment="center" Grid.Column="0" Panel.ZIndex="1" Grid.ColumnSpan="2" Margin="0,300,0,0" FontFamily="chiller" FontSize="50" FontWeight="Bold" Foreground="GreenYellow" Visibility="Collapsed"/>
 
-        <StackPanel Grid.Column="0" Height="600">
-            <Label Content="Neuen Kontakt anlegen" HorizontalContentAlignment="center" FontFamily="Arial" FontSize="18" Foreground="OrangeRed"/>
+        <StackPanel Grid.Column="0" Height="650" Margin="0,45,0,0">
+            <Label x:Name="FormLabel"       Content="Neuen Kontakt anlegen" HorizontalContentAlignment="center" FontFamily="Arial" FontSize="18" Foreground="OrangeRed"/>
             <Label x:Name="VornameLabel"    Content="VORNAME" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="ExtraLight"/>
             <TextBox x:Name="Vorname"       Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
             <Label x:Name="NachnameLabel"   Content="NACHNAME" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
             <TextBox x:Name="Nachname"      Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
-            <Label x:Name="StrasseLabel"    Content="STRAßE" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
+            <Label x:Name="StrasseLabel"    Content="STRAßE UND HAUSNUMMER" Height="25" Width="auto" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
             <TextBox x:Name="Straße"        Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
             <Label x:Name="PLZLabel"        Content="POSTLEITZAHL" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
             <TextBox x:Name="PLZ"           Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
@@ -48,16 +49,18 @@
             <TextBox x:Name="Telefonnummer" Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
             <Label x:Name="HandyLabel"      Content="MOBILNUMMER" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
             <TextBox x:Name="Handynummer"   Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
-            <Label x:Name="EmailLabel"      Content="EMAILADRESSE" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
+            <Label x:Name="EmailLabel"      Content="EMAIL-ADRESSE" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
             <TextBox x:Name="Emailadresse"  Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
-            <Button x:Name="saveData"       Content="Kontaktdaten speichern" Margin="20" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="28" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="saveData_Click"/>
+            <Button x:Name="ClearMask"       Content="Formular leeren" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="35" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="ClearMask_Click"/>
+            <Button x:Name="saveData"       Content="Kontaktdaten speichern" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="28" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="saveData_Click"/>
 
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Height="600">
-            <Label Content="Gespeicherte Kontaktdaten" Margin="3" HorizontalContentAlignment="center" FontFamily="Arial" FontSize="18" Foreground="OrangeRed"/>
-            <ListBox x:Name="FileData" Height="480" Background="Black" Foreground="#FFFFA400" BorderBrush="#FF9A0303" BorderThickness="2"/>
-            <Button  x:Name="DeleteFileLine" Content="Datensatz löschen !" Margin="15" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="30" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="DeleteFileLine_Click"/>
+        <StackPanel Grid.Column="1" Height="700" Margin="0,85,0,0" Orientation="Vertical">
+            <Label Content="Gespeicherte Kontakte" Margin="3" HorizontalContentAlignment="center" FontFamily="Arial" FontSize="18" Foreground="OrangeRed"/>
+            <ListBox x:Name="FileData" Height="480" Width="420" Background="Black" Foreground="#FFFFA400" BorderBrush="#FF9A0303" BorderThickness="2" MouseDoubleClick="FileData_MouseDoubleClick"/>
+            <Button  x:Name="DeleteFileLine" Content="Datensatz löschen !" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="30" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="DeleteFileLine_Click"/>
+            <Button  x:Name="Quit" Content="Programm beenden" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="30" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="Quit_Click"/>
         </StackPanel>
     </Grid>
 </Window>
