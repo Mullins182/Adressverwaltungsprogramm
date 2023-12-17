@@ -42,6 +42,8 @@ namespace Adressverwaltungsprogramm.Controller
             }
             else
             {
+                string cache;
+
                 var fileLines = File.ReadAllLines(path);
 
                 foreach (var item in fileLines)
@@ -51,7 +53,7 @@ namespace Adressverwaltungsprogramm.Controller
 
                 foreach (var item in form)
                 {
-                    string cache = $"{item.Vorname}*{item.Nachname}";
+                    cache = $"{item.Vorname}*{item.Nachname}";
                     writeCache.Add(cache);
                     cache = $"{item.Strasse}";
                     writeCache.Add(cache);

@@ -3,6 +3,7 @@ using Adressverwaltungsprogramm.Models;
 using System.IO;
 using System.Text;
 using System.Windows;
+using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -33,7 +34,7 @@ namespace Adressverwaltungsprogramm
             listBoxOutput();
         }
 
-        private void saveData_Click(object sender, RoutedEventArgs e)
+        private async void saveData_Click(object sender, RoutedEventArgs e)
         {
             FormData contactData        = new FormData();
             List<FormData> writeData    = new List<FormData>();
@@ -74,7 +75,14 @@ namespace Adressverwaltungsprogramm
 
                     listBoxOutput();
 
+                    WriteInfoLabel.Content = "KONTAKTDATEN AKTUALISIERT";
+                    WriteInfoLabel.Visibility = Visibility.Visible;
+
+                    await Task.Delay(3000);
+
+                    WriteInfoLabel.Visibility = Visibility.Collapsed;
                     FormLabel.Content = "Neuen Kontakt anlegen";
+                    WriteInfoLabel.Content = "KONTAKTDATEN IN DATEI GESCHRIEBEN";
                 }
                 else
                 {
@@ -101,6 +109,12 @@ namespace Adressverwaltungsprogramm
                     Emailadresse.Text           = "";
 
                     Controller.FileAccess.WriteData(writeData, filePath);
+
+                    WriteInfoLabel.Visibility = Visibility.Visible;
+
+                    await Task.Delay(3000);
+
+                    WriteInfoLabel.Visibility = Visibility.Collapsed;
 
                     listBoxOutput();
                 }
