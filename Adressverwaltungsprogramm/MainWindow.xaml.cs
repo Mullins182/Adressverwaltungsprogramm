@@ -29,7 +29,7 @@ namespace Adressverwaltungsprogramm
         {
             InitializeComponent();
 
-            ShowVersion.Content = "Version 1.0.3";
+            ShowVersion.Content = "Version 1.0.4";
 
             listBoxOutput();
         }

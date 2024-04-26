@@ -6,6 +6,33 @@
         xmlns:local="clr-namespace:Adressverwaltungsprogramm"
         mc:Ignorable="d"
         Title="Ben's Adressverwaltungs App" Height="800" Width="1000" Background="#FF4C0000" BorderThickness="1.5" BorderBrush="Goldenrod">
+    
+    <!--Control Template Override für Buttons um Highlighting bei Mouseover zu verhindern !-->
+
+    <Window.Resources>
+        <ControlTemplate x:Key="NoMouseOverButtonTemplate"
+                 TargetType="Button">
+            <Border Background="{TemplateBinding Background}"
+          BorderBrush="{TemplateBinding BorderBrush}"
+          BorderThickness="{TemplateBinding BorderThickness}">
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  
+                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled"  
+             Value="False">
+                    <Setter Property="Background"  
+              Value="{x:Static SystemColors.ControlLightBrush}" />
+                    <Setter Property="Foreground"  
+              Value="{x:Static SystemColors.GrayTextBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <!--Control Templates Override ENDE !-->
+
     <Grid RenderTransformOrigin="0.5,0.5">
         <Grid.Background>
             <RadialGradientBrush SpreadMethod="Reflect" MappingMode="RelativeToBoundingBox">
@@ -51,16 +78,24 @@
             <TextBox x:Name="Handynummer"   Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
             <Label x:Name="EmailLabel"      Content="EMAIL-ADRESSE" Height="25" Width="150" HorizontalAlignment="left" Margin="5" Foreground="#FFFFA400" FontFamily="chiller" FontSize="18" FontWeight="Thin"/>
             <TextBox x:Name="Emailadresse"  Width="400" Height="25" Background="#FF7B0B00" Foreground="#FF83D20A" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Normal"/>
-            <Button x:Name="ClearMask"       Content="Formular leeren" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="35" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="ClearMask_Click"/>
-            <Button x:Name="saveData"       Content="Kontaktdaten speichern" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="28" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="saveData_Click"/>
+            <Button x:Name="ClearMask"      Content="Formular leeren" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" 
+                    FontSize="35" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" 
+                    BorderBrush="#FF770101" Click="ClearMask_Click" Template="{StaticResource NoMouseOverButtonTemplate}"/>
+            <Button x:Name="saveData"       Content="Kontaktdaten speichern" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" 
+                    FontSize="28" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" 
+                    BorderBrush="#FF770101" Click="saveData_Click" Template="{StaticResource NoMouseOverButtonTemplate}"/>
 
         </StackPanel>
 
         <StackPanel Grid.Column="1" Height="700" Margin="0,85,0,0" Orientation="Vertical">
             <Label Content="Gespeicherte Kontakte" Margin="3" HorizontalContentAlignment="center" FontFamily="Arial" FontSize="18" Foreground="OrangeRed"/>
             <ListBox x:Name="FileData" Height="480" Width="420" Background="Black" Foreground="#FFFFA400" BorderBrush="#FF9A0303" BorderThickness="2" MouseDoubleClick="FileData_MouseDoubleClick"/>
-            <Button  x:Name="DeleteFileLine" Content="Datensatz löschen !" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="30" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="DeleteFileLine_Click"/>
-            <Button  x:Name="Quit" Content="Programm beenden" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" FontSize="30" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" BorderBrush="#FF770101" Click="Quit_Click"/>
+            <Button  x:Name="DeleteFileLine" Content="Datensatz löschen !" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" 
+                     FontSize="30" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" 
+                     BorderBrush="#FF770101" Click="DeleteFileLine_Click" Template="{StaticResource NoMouseOverButtonTemplate}"/>
+            <Button  x:Name="Quit" Content="Programm beenden" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" 
+                     FontSize="30" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" 
+                     BorderBrush="#FF770101" Click="Quit_Click" Template="{StaticResource NoMouseOverButtonTemplate}"/>
         </StackPanel>
     </Grid>
 </Window>
