@@ -17,16 +17,14 @@ using MySqlConnector;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Adressverwaltungsprogramm
-{
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    /// 
-        
+{        
     public partial class MainWindow : Window
     {
-        string filePath = "Kontaktdaten.dat";
-        bool editContactData = false;
+        private string filePath         = "Kontaktdaten.dat";
+        private bool editContactData    = false;
+        private bool _dbModeActive      = false;
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -255,14 +253,32 @@ namespace Adressverwaltungsprogramm
             }
         }
 
-        private void DbaseQuery_Click(object sender, RoutedEventArgs e)
+        private void DbaseMode_Click(object sender, RoutedEventArgs e)
         {
-            FileData.ItemsSource = null;
-            FileData.Items.Clear();
+            _dbModeActive = _dbModeActive ? false : true;
 
-            DataAccessLibrary.Models.SqlOperations sqlOp = new DataAccessLibrary.Models.SqlOperations(Functions.GetConString());
+            if (_dbModeActive)
+            {
+                DbaseMode.Content       = "Database Access ON";
+                DbaseMode.BorderBrush   = new SolidColorBrush(Colors.GreenYellow);
 
-            FileData.ItemsSource = sqlOp.GetAllPersons();
+                FileData.ItemsSource    = null;
+                FileData.Items.Clear();
+
+                DataAccessLibrary.Models.SqlOperations sqlOp = new DataAccessLibrary.Models.SqlOperations(Functions.GetConString());
+
+                FileData.ItemsSource    = sqlOp.GetAllPersons();            
+            }
+            else
+            {
+                DbaseMode.Content = "Database Access OFF";
+
+                FileData.ItemsSource    = null;
+
+                DbaseMode.BorderBrush   = new SolidColorBrush(Color.FromArgb(255, 77, 01, 01));
+
+                listBoxOutput();
+            }
         }
     }
 }

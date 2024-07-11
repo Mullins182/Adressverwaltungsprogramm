@@ -93,12 +93,12 @@
             <Button  x:Name="DeleteFileLine" Content="Datensatz löschen !" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" 
                      FontSize="30" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" 
                      BorderBrush="#FF770101" Click="DeleteFileLine_Click" Template="{StaticResource NoMouseOverButtonTemplate}"/>
+            <Button  x:Name="DbaseMode" Content="Database Access Off" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" 
+                     FontSize="30" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" 
+                     BorderBrush="#FF770101" Click="DbaseMode_Click" Template="{StaticResource NoMouseOverButtonTemplate}"/>
             <Button  x:Name="Quit" Content="Programm beenden" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" 
                      FontSize="30" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" 
                      BorderBrush="#FF770101" Click="Quit_Click" Template="{StaticResource NoMouseOverButtonTemplate}"/>
-            <Button  x:Name="DbaseQuery" Content="DB Abruf" Margin="5" RenderOptions.EdgeMode="Aliased" FontFamily="chiller" 
-                     FontSize="30" Height="60" Width="200" Background="#FF120101" Foreground="#FFF38600" BorderThickness="2" 
-                     BorderBrush="#FF770101" Click="DbaseQuery_Click" Template="{StaticResource NoMouseOverButtonTemplate}"/>
         </StackPanel>
     </Grid>
 </Window>
