@@ -8,4 +8,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SQL_Data_AccessApp\DataAccessLibrary\DataAccessLibrary.csproj" />
+    <ProjectReference Include="..\..\..\SQL_Data_AccessApp\SQL_Data_AccessApp\SQL_Data_AccessApp.csproj" />
+  </ItemGroup>
+
 </Project>

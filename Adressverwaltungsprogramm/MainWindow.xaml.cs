@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DataAccessLibrary;
+using MySqlConnector;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Adressverwaltungsprogramm
@@ -255,7 +257,12 @@ namespace Adressverwaltungsprogramm
 
         private void DbaseQuery_Click(object sender, RoutedEventArgs e)
         {
+            FileData.ItemsSource = null;
+            FileData.Items.Clear();
 
+            DataAccessLibrary.Models.SqlOperations sqlOp = new DataAccessLibrary.Models.SqlOperations(Functions.GetConString());
+
+            FileData.ItemsSource = sqlOp.GetAllPersons();
         }
     }
 }
