@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using DataAccessLibrary;
 using MySqlConnector;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using DataAccessLibrary.Models;
+using Windows.ApplicationModel.Contacts;
 
 namespace Adressverwaltungsprogramm
 {        
@@ -234,22 +236,25 @@ namespace Adressverwaltungsprogramm
             }
             else
             {
-                FormLabel.Content = "Kontakt bearbeiten";
+                if (!_dbModeActive)
+                {
+                    FormLabel.Content = "Kontakt bearbeiten";
 
-                List<string>? ContactData = new List<string>();
+                    List<string>? ContactData = new List<string>();
 
-                ContactData = editFileEntrys.ReadData();
+                    ContactData = editFileEntrys.ReadData();
 
-                Vorname.Text        = ContactData[FileData.SelectedIndex * 9];
-                Nachname.Text       = ContactData[FileData.SelectedIndex * 9 + 1];
-                Straße.Text         = ContactData[FileData.SelectedIndex * 9 + 2];
-                PLZ.Text            = ContactData[FileData.SelectedIndex * 9 + 3];
-                Ort.Text            = ContactData[FileData.SelectedIndex * 9 + 4];
-                Telefonnummer.Text  = ContactData[FileData.SelectedIndex * 9 + 5];
-                Handynummer.Text    = ContactData[FileData.SelectedIndex * 9 + 6];
-                Emailadresse.Text   = ContactData[FileData.SelectedIndex * 9 + 7];
+                    Vorname.Text = ContactData[FileData.SelectedIndex * 9];
+                    Nachname.Text = ContactData[FileData.SelectedIndex * 9 + 1];
+                    Straße.Text = ContactData[FileData.SelectedIndex * 9 + 2];
+                    PLZ.Text = ContactData[FileData.SelectedIndex * 9 + 3];
+                    Ort.Text = ContactData[FileData.SelectedIndex * 9 + 4];
+                    Telefonnummer.Text = ContactData[FileData.SelectedIndex * 9 + 5];
+                    Handynummer.Text = ContactData[FileData.SelectedIndex * 9 + 6];
+                    Emailadresse.Text = ContactData[FileData.SelectedIndex * 9 + 7];
 
-                editContactData = true;
+                    editContactData = true;
+                }
             }
         }
 
@@ -259,15 +264,23 @@ namespace Adressverwaltungsprogramm
 
             if (_dbModeActive)
             {
-                DbaseMode.Content       = "Database Access ON";
-                DbaseMode.BorderBrush   = new SolidColorBrush(Colors.GreenYellow);
-
                 FileData.ItemsSource    = null;
                 FileData.Items.Clear();
 
                 DataAccessLibrary.Models.SqlOperations sqlOp = new DataAccessLibrary.Models.SqlOperations(Functions.GetConString());
 
-                FileData.ItemsSource    = sqlOp.GetAllPersons();            
+                FileData.ItemsSource    = sqlOp.GetAllPersons();
+
+                if (MySqlAccess.dBConnFail == true)
+                {
+                    FileData.ItemsSource = null;
+                    FileData.Items.Add("Keine Datenbankverbindung möglich !!!");
+                    MySqlAccess.dBConnFail = false;
+                    return;
+                }
+
+                DbaseMode.Content = "Database Access ON";
+                DbaseMode.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
             }
             else
             {
